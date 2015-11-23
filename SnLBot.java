@@ -1,23 +1,29 @@
 import org.jibble.pircbot.*;
 import java.util.*;
+import java.io.*;
 
 
 public class SnLBot extends PircBot {
     
     Timer timer;
-    String ch, ad1, ad2, ad3, ad4, ad5, admin;
+    String ch, ad1, ad2, ad3, ad4, ad5, admin, lastSender;
     boolean timer_check = false;
-    int randNumber, randOldNumber = 0, timerMinutes = 2, X = 60;
+    int randNumber, randOldNumber = 0, timerMinutes = 5, X = 60;
     Random rand;
+    BotConf conf = new BotConf();
             
-    public SnLBot(String nick, String AD1, String AD2, String AD3, String AD4, String AD5, String Admin) { 
-        this.setName(nick);
-        ad1 = AD1; ad2 = AD2; ad3 = AD3; ad4 = AD4; ad5 = AD5; admin = Admin;
+    public SnLBot() throws IOException { 
+        ch = conf.Channel();
+        ad1 = conf.Ad1(); ad2 = conf.Ad2(); ad3 = conf.Ad3(); ad4 = conf.Ad4(); ad5 = conf.Ad5(); admin = conf.Admin();
+        this.setName(conf.Nickname());
         
     }
-        
-    public void onMessage(String channel, String sender, String login, String hostname, String message) {
-
+    public void onJoin(String channel, String sender, String login, String hostname){
+        if(lastSender != sender){
+        sendMessage(channel, "Welcome to " + channel + "'s channel "+ sender +". Have fun, and enjoy the stream!");
+        }
+    }       
+    public void onMessage(String channel, String sender, String login, String hostname, String message) {     
         //Command List
         if (message.equalsIgnoreCase("!cmd")){
         
@@ -36,31 +42,34 @@ public class SnLBot extends PircBot {
             sendMessage(channel, "@" + sender + " to join Shoot n Loot visit http://shootnloot.com");
             
         }
-        //Hidden Commands
-        if(message.equalsIgnoreCase("!exit") && sender.equalsIgnoreCase(admin)){
-            sendMessage(channel, "Good bye " + sender + ", I'm going to miss you!");
-            Runtime.getRuntime().exit(0);           
-        } 
-        if (message.equalsIgnoreCase("!debug") && sender.equalsIgnoreCase(admin)){
+        //Admin Commands Only
+        if(sender.equalsIgnoreCase(admin)){
+            //Hidden Commands
+            if(message.equalsIgnoreCase("!exit") && sender.equalsIgnoreCase(admin)){
+                sendMessage(channel, "Good bye " + sender + ", I'm going to miss you!");
+                Runtime.getRuntime().exit(0);           
+            } 
+            if (message.equalsIgnoreCase("!debug") && sender.equalsIgnoreCase(admin)){
             
-            sendMessage(channel, "Channel: " + channel + ", Hostname: " + hostname + ", Login: " + login);
+                sendMessage(channel, "Channel: " + channel + ", Hostname: " + hostname + ", Login: " + login);
             
-        }
-        //Ads Commands
-        if(message.equalsIgnoreCase("!ads_on") && sender.equalsIgnoreCase(admin)){
+            }
+            //Ads Commands
+            if(message.equalsIgnoreCase("!ads on")){
             
-            ch = new String(channel);
-            timer = new Timer();
-            timer.schedule( new AdTask(), (timerMinutes*X)*1000);
-            timer_check = true;
+                timer = new Timer();
+                timer.schedule( new AdTask(), (timerMinutes*X)*1000);
+                timer_check = true;
+                sendMessage(channel, "Ads are enabled.");
             
-        }
-        if(message.equalsIgnoreCase("!ads_off") && sender.equalsIgnoreCase(admin)){
+            }
+            if(message.equalsIgnoreCase("!ads off") && sender.equalsIgnoreCase(admin)){
             
-            timer_check = false;
-            timer.cancel();
+                timer_check = false;
+                timer.cancel();
+                sendMessage(channel, "Ads are disabled.");
             
-        }
+            }
     }
     
     class AdTask extends TimerTask {

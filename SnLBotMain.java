@@ -1,4 +1,6 @@
 import org.jibble.pircbot.*;
+import java.util.*;
+
 
 public class SnLBotMain {
         
@@ -7,7 +9,7 @@ public class SnLBotMain {
          BotConf conf = new BotConf();
                 
         // Now start our bot up.
-        SnLBot bot = new SnLBot(conf.Nickname(),conf.Ad1(), conf.Ad2(), conf.Ad3(), conf.Ad4(), conf.Ad5(), conf.Admin());
+        SnLBot bot = new SnLBot();
         
         // Enable debugging output.
         bot.setVerbose(true);

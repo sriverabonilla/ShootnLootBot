@@ -1,9 +1,9 @@
-~SnL Bot Alpha 1~ by Samuel R Rivera | pircbot.jar is CCL3.0 and this project is NOT FOR PROFIT
-To run the Bot you are going to need Java and the latest release of pircbot.jar at the root of the folder. 
+~SnL Bot Alpha 2~ by Samuel R Rivera | pircbot.jar is CCL3.0 and this project is NOT FOR PROFIT
+To run the Bot you are going to need Java. 
 
 The contents of the folder need to include the following items:
 -Folder: conf > admin.txt, ads.txt, snl.txt
--Files: BotConf.class, SnLBot.class, SnLBotMain.class, SnLBot$AdTask.class
+-Files: BotConf.class, SnLBot.class, SnLBotMain.class, SnLBot$AdTask.class, pircbot(.jar)
 
 Bot Configuration:
 All the configuration files can be found on the on the "conf" folder. Each file needs to keep it's formating for the Bot to work properly. The ";" symbol is used as a separator.

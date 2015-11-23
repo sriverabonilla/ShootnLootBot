@@ -2,32 +2,37 @@ import java.util.*;
 import java.io.*;
 
 public class BotConf {
-	String oauth, channel, nickname, ad1, ad2, ad3, ad4, ad5, admin;
+	String oauth, channel, nickname, ad1, ad2, ad3, ad4, ad5, admin, bungie_api, motd;
 	
 	public BotConf() throws IOException , FileNotFoundException {
 
-		File file1 = new File("./conf/snl.txt");
-		Scanner s = new Scanner(file1).useDelimiter("\\s*;\\s*");
-		oauth = s.next();
-		channel = s.next();
-		nickname = s.next();
-		s.close();
-		
-		File file2 = new File("./conf/ads.txt");
-		Scanner a = new Scanner(file2).useDelimiter("\\a*;\\a*");
-		ad1 = a.next();
-		ad2 = a.next();
-		ad3 = a.next();
-		ad4 = a.next();
-		ad5 = a.next();
+		File file1 = new File("./conf/conf.txt");
+		Scanner a = new Scanner(file1).useDelimiter("\\a*;\\a*");
+		admin = a.next();
+		channel = a.next();
+		nickname = a.next();
+		oauth = a.next();
 		a.close();
 		
-		File file3 = new File("./conf/admin.txt");
-		Scanner b = new Scanner(file3).useDelimiter("\\b*;\\b*");
-		admin = b.next();
+		File file2 = new File("./conf/ads.txt");
+		Scanner b = new Scanner(file2).useDelimiter("\\b*;\\b*");
+		ad1 = b.next();
+		ad2 = b.next();
+		ad3 = b.next();
+		ad4 = b.next();
+		ad5 = b.next();
 		b.close();
+				
+		File file3 = new File("./conf/bungie.txt");
+		Scanner d = new Scanner(file3).useDelimiter("\\d*;\\d*");
+		bungie_api = d.next();
+		d.close();
+		
+		File file4 = new File("./conf/motd.txt");
+		Scanner e = new Scanner(file4).useDelimiter("\\e*;\\e*");
+		motd = e.next();
+		e.close();
 	}
-	
 	public String Oauth(){
 		return oauth;
 	}
@@ -54,5 +59,11 @@ public class BotConf {
 	}
 	public String Admin() {
 		return admin;
+	}
+	public String Motd(){
+		return motd;
+	}
+	public String BungieApi(){
+		return bungie_api;
 	}
 }
